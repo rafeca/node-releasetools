@@ -38,9 +38,21 @@ namespace('release', function() {
       complete();
     });
   }, true);
+  
+  desc('Modify changelog with last commits');
+  task('changelog', ['release:version'], function(releaseType) {
+    console.log('Updating History.md file...');
+    releaseTools.updateChangelog(version, function(err) {
+      if (err) {
+        fail('Error while updating AUTHORS file: ' + err);
+      }
+      console.log('Done!');
+      complete();
+    });
+  }, true);
 
   desc("create examples");
-  task("examples",['release:version'], function() {
+  task("examples",['release:changelog'], function() {
     console.log('\ncreating examples documentation...');
     releaseTools.createExamples(function(err){
       if (err) {
@@ -74,22 +86,10 @@ namespace('release', function() {
     });
   }, true);
   
-  desc('Modify changelog with last commits');
-  task('changelog', ['release:version'], function(releaseType) {
-    console.log('Updating History.md file...');
-    releaseTools.updateChangelog(version, function(err) {
-      if (err) {
-        fail('Error while updating AUTHORS file: ' + err);
-      }
-      console.log('Done!');
-      complete();
-    });
-  }, true);
-  
   desc('Bumps the version and creates the tag in git');
   task('git', ['test', 'release:site'] ,function() {
     console.log('Bumping version and creating git tag...');
-    releaseTools.createGitTag(version, function(err) {
+    releaseTools.commitToGit(version, function(err) {
       if (err) {
         fail('Error while committing new version and creating git tag: ' + err);
       }
