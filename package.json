@@ -28,6 +28,6 @@
     "test": "./node_modules/jasmine-node/bin/jasmine-node spec"
   },
   "bin": {},
-  "version": "0.0.1",
+  "version": "0.0.0",
   "main": "./lib/main"
 }
