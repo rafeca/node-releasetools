@@ -1,0 +1,33 @@
+{
+  "author": "Rafael de Oleza <rafeca@gmail.com> (https://rafeca.com)",
+  "name": "releasetools",
+  "description": "A set of function to deal with package releases in Node.js",
+  "homepage": "https://rafeca.com/node-releasetools",
+  "keywords": [
+    "release",
+    "git",
+    "npm"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rafeca/node-releasetools.git"
+  },
+  "dependencies": {
+    "robotskirt": "~0.2.2",
+    "docco": "~0.3.0",
+    "step": "~0.0.5"
+  },
+  "devDependencies": {
+    "jake": "~0.1.20",
+    "jasmine-node": "1.0.x"
+  },
+  "engines": {
+    "node": ">= 0.4.1 < 0.7.0"
+  },
+  "scripts": {
+    "test": "./node_modules/jasmine-node/bin/jasmine-node spec"
+  },
+  "bin": {},
+  "version": "0.0.1",
+  "main": "./lib/main"
+}
