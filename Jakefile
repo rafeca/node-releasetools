@@ -51,8 +51,20 @@ namespace('release', function() {
     });
   }, true);
 
+  desc('Update AUTHORS file');
+  task('authors', ["release:changelog"], function(){
+    console.log('Updating AUTHORS file...');
+    releaseTools.createAuthorsFile(function(err) {
+      if (err) {
+        fail('Error while updating AUTHORS file: ' + err);
+      }
+      console.log('Done!');
+      complete();
+    });
+  }, true);
+
   desc("create examples");
-  task("examples",['release:changelog'], function() {
+  task("examples",['release:authors'], function() {
     console.log('\ncreating examples documentation...');
     releaseTools.createExamples(function(err){
       if (err) {
@@ -68,18 +80,6 @@ namespace('release', function() {
     releaseTools.createSite(function(err){
       if (err) {
         fail('Error while creating web site: ' + err);
-      }
-      console.log('Done!');
-      complete();
-    });
-  }, true);
-  
-  desc('Update AUTHORS file');
-  task('authors', ["release:site"], function(){
-    console.log('Updating AUTHORS file...');
-    releaseTools.createAuthorsFile(function(err) {
-      if (err) {
-        fail('Error while updating AUTHORS file: ' + err);
       }
       console.log('Done!');
       complete();
