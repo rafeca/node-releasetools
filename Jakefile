@@ -25,37 +25,25 @@ task("test",function() {
 
 namespace('release', function() { 
   var version;
-
-  desc('Bump version in package.json');
-  task('version', ['test'], function(releaseType) {
-    releaseType = releaseType || 'patch';
-    console.log('Bumping version in package.json...');
-    releaseTools.updateVersion(releaseType, function(err, newVersion) {
-      if (err) {
-        fail('Error while updating version in package.json: ' + err);
-      }
-      version = newVersion;
-      console.log('Done!');
-      complete();
-    });
-  }, true);
   
-  desc('Modify changelog with last commits');
-  task('changelog', ['release:version'], function(releaseType) {
+  // ## Update changelog task
+  desc('Update changelog with last commits');
+  task('changelog', ['test'], function(releaseType) {
     console.log('Updating History.md file...');
     releaseTools.updateChangelog(version, function(err) {
       if (err) {
-        fail('Error while updating AUTHORS file: ' + err);
+        fail('Error while updating Changelog: ' + err);
       }
       console.log('Done!');
       complete();
     });
   }, true);
 
+  // ## Update AUTHORS task
   desc('Update AUTHORS file');
   task('authors', ["release:changelog"], function(){
     console.log('Updating AUTHORS file...');
-    releaseTools.createAuthorsFile(function(err) {
+    releaseTools.updateAuthorsFile(function(err) {
       if (err) {
         fail('Error while updating AUTHORS file: ' + err);
       }
@@ -64,6 +52,10 @@ namespace('release', function() {
     });
   }, true);
 
+  // ## Creates examples task
+  // It converts all the example files inside the examples folder to an
+  // HTML file with inline annotated comments, using 
+  // [Docco](http://jashkenas.github.com/docco/)
   desc("create examples");
   task("examples",['release:authors'], function() {
     console.log('creating examples documentation...');
@@ -76,6 +68,7 @@ namespace('release', function() {
     });
   }, true);
 
+  // ## Create site task
   desc("create site");
   task("site", ["release:examples"], function() {
     releaseTools.createSite(function(err){
@@ -87,18 +80,32 @@ namespace('release', function() {
     });
   }, true);
   
+  // ## Git commits task
+  // Makes the commit and creates the tag
   desc('Bumps the version and creates the tag in git');
-  task('git', ['test', 'release:site'] ,function() {
-    console.log('Bumping version and creating git tag...');
-    releaseTools.commitToGit(version, function(err) {
+  task('git', ['test'] ,function() {
+    // First of all, check if the other tasks have been executed
+    releaseTools.isWorkingCopyClean('History.md', function(err, result){
       if (err) {
-        fail('Error while committing new version and creating git tag: ' + err);
+        fail('Error while checking if the git tree is clean: ' + err);
       }
-      console.log('Done!');
-      complete();
-    });
+      if (!result) {
+        fail('You must run jake release:site before publishing anything');
+      }
+      
+      console.log('Bumping version and creating git tag...');
+      releaseTools.commitToGit(version, function(err) {
+        if (err) {
+          fail('Error while committing new version and creating git tag: ' + err);
+        }
+        console.log('Done!');
+        complete();
+      });
+      
+    });    
   }, true);
   
+  // ## Update pages branch task
   desc('Merge the master branch into the gh-pages branch');
   task('gh-pages', ['release:git'] ,function() {    
     console.log('Merging changes into gh-pages branch...');
@@ -111,6 +118,7 @@ namespace('release', function() {
     });
   }, true);
   
+  # ## Push to GitHub task
   desc('Push code to GitHub and publishes the NPM package');
   task('publish', ['release:gh-pages'] ,function() {
     console.log('Pushing changes to GitHub and publishing NPM package...');
@@ -125,6 +133,25 @@ namespace('release', function() {
         console.log('Done!');
         complete();
       })
+    });
+  }, true);
+  
+  // ## Update package.json task
+  // It accepts a parameter which can be patch, minor or major and then 
+  // upgrades the version in the `package.json` file based on the 
+  // [Semantic Versioning Spec](http://semver.org/).
+  // If no parameter is specified, it uses `patch` as the param.
+  desc('Bump version in package.json');
+  task('version', function(releaseType) {
+    releaseType = releaseType || 'patch';
+    console.log('Bumping version in package.json...');
+    releaseTools.updateVersion(releaseType, function(err, newVersion) {
+      if (err) {
+        fail('Error while updating version in package.json: ' + err);
+      }
+      version = newVersion;
+      console.log('Done!');
+      complete();
     });
   }, true);
 });
