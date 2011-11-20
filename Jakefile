@@ -23,14 +23,12 @@ task("test",function() {
   });
 }, true);
 
-namespace('release', function() { 
-  var version;
-  
+namespace('release', function() {   
   // ## Update changelog task
   desc('Update changelog with last commits');
   task('changelog', ['test'], function(releaseType) {
     console.log('Updating History.md file...');
-    releaseTools.updateChangelog(version, function(err) {
+    releaseTools.updateChangelog(function(err) {
       if (err) {
         fail('Error while updating Changelog: ' + err);
       }
@@ -89,12 +87,12 @@ namespace('release', function() {
       if (err) {
         fail('Error while checking if the git tree is clean: ' + err);
       }
-      if (!result) {
+      if (result) {
         fail('You must run jake release:site before publishing anything');
       }
       
       console.log('Bumping version and creating git tag...');
-      releaseTools.commitToGit(version, function(err) {
+      releaseTools.commitToGit(function(err) {
         if (err) {
           fail('Error while committing new version and creating git tag: ' + err);
         }
@@ -118,7 +116,7 @@ namespace('release', function() {
     });
   }, true);
   
-  # ## Push to GitHub task
+  // ## Push to GitHub task
   desc('Push code to GitHub and publishes the NPM package');
   task('publish', ['release:gh-pages'] ,function() {
     console.log('Pushing changes to GitHub and publishing NPM package...');
