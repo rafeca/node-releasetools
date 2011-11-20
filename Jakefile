@@ -69,6 +69,7 @@ namespace('release', function() {
   // ## Create site task
   desc("create site");
   task("site", ["release:examples"], function() {
+    console.log('Creating the public site page');
     releaseTools.createSite(function(err){
       if (err) {
         fail('Error while creating web site: ' + err);
