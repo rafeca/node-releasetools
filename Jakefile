@@ -29,6 +29,7 @@ namespace('release', function() {
   desc('Bump version in package.json');
   task('version', ['test'], function(releaseType) {
     releaseType = releaseType || 'patch';
+    console.log('Bumping version in package.json...');
     releaseTools.updateVersion(releaseType, function(err, newVersion) {
       if (err) {
         fail('Error while updating version in package.json: ' + err);
@@ -65,7 +66,7 @@ namespace('release', function() {
 
   desc("create examples");
   task("examples",['release:authors'], function() {
-    console.log('\ncreating examples documentation...');
+    console.log('creating examples documentation...');
     releaseTools.createExamples(function(err){
       if (err) {
         fail('Error while creating examples documentation: ' + err);
