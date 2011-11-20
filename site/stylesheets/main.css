@@ -63,6 +63,10 @@ p {
   margin: 0 0 15px 0;
 }
 
+em {
+  font-style: italic;
+}
+
 h1, h2, h3, h4, h5, h6 {
   margin: 0px 0 15px 0;
 }
@@ -80,6 +84,12 @@ h2 {
   line-height: 1.3em;
   font-weight: normal;
   border-bottom: 1px solid #999;
+}
+
+h3 {
+  font-size: 1.2em;
+  line-height: 1.2em;
+  font-weight: bold;  
 }
 
 #footer {
