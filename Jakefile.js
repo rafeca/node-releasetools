@@ -73,13 +73,13 @@ namespace('release', function() {
   }, true);
   
   desc('Create the public site');
-  task('site', ['test'], function(releaseType) {
+  task('site', function(releaseType) {
     // ### Create site
     // It creates the `docs/` folder with the following contents:
     // * All the assets in `site/javascripts` and `site/stylesheets`
     // * The `site/index.html` skeleton file with the contents of the
     //   specified markdown files
-    console.log('Creating the public site page');
+    console.log('Creating the public site page...');
     releaseTools.createSite(function(err){
       if (err) fail();
       else complete();
