@@ -144,11 +144,11 @@ namespace('release', function() {
   task('bump', function(releaseType) {
     releaseType = releaseType || 'patch';
     console.log('Bumping version in package.json...');
-    releaseTools.updateVersionInPackageJson(releaseType, function(err, newVersion) {
+    releaseTools.updateVersionInPackageJson(releaseType, function(err, oldVersion, newVersion) {
       if (err) {
         fail('Error while updating version in package.json: ' + err);
       }
-      version = newVersion;
+      console.log(oldVersion + ' --> ' + newVersion);
       console.log('Done!');
       complete();
     });
