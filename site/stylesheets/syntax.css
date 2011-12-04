@@ -16,7 +16,7 @@ pre .winutils,
 pre .javascript .title,
 pre .lisp .title,
 pre .subst {
-  color: #954121
+  color: #B26818
 }
 
 pre .number,
@@ -28,7 +28,7 @@ pre .string,
 pre .tag .value,
 pre .phpdoc,
 pre .tex .formula {
-  color: #219161;
+  color: #D11E27;
 }
 
 pre .title,
