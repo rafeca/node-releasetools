@@ -2,16 +2,33 @@
 
 ## What is this all about?
 
-Node Release Tools is a simple NPM package which makes it really easy to make releases of your Node.js libraries
+Node Release Tools is a simple NPM package which makes it really easy automate releases of your Node.js libraries
 
-## How to use it
+## Installation
 
-It's really simple to use it... Just install it via NPM as you are used to do:
-
+Just install it via NPM:
+    
+    
     $ npm install releasetools
+    
 
+## Usage
 
-And then start using it!
+The easiest way to use it is by requiring it in your build script. You can see an example of usage in this package's
+Jakefile file.
 
-The easiest way to integrate it with your project is by inserting it with your Jakefile file. Check this
-package Jakefile to get more info about how to do it
+## Tests
+
+You just have to checkout this package from GitHub, install development dependencies and execute the tests:
+
+    
+    $ git checkout https://github.com/rafeca/node-releasetools.git
+    
+    $ npm install --dev
+    
+    $ npm test
+    
+
+## License
+
+X11/MIT
