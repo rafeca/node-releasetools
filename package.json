@@ -33,6 +33,6 @@
     "url": "http://github.com/rafeca/node-releasetools/issues"
   },
   "bin": {},
-  "version": "0.0.2",
+  "version": "0.0.2-1",
   "main": "./lib/main"
 }
