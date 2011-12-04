@@ -27,8 +27,3 @@ You just have to checkout this package from GitHub, install development dependen
     $ npm install --dev
     
     $ npm test
-    
-
-## License
-
-X11/MIT
