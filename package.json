@@ -17,7 +17,7 @@
     "robotskirt": "~0.2.2",
     "docco": "~0.3.0",
     "step": "~0.0.5"
-},
+  },
   "devDependencies": {
     "jake": "~0.1.20",
     "mocha": "~0.3.0",
@@ -29,10 +29,10 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha --reporter list"
   },
-  "bugs" : {
-    "url" : "http://github.com/rafeca/node-releasetools/issues"
+  "bugs": {
+    "url": "http://github.com/rafeca/node-releasetools/issues"
   },
   "bin": {},
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "./lib/main"
 }
