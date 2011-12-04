@@ -1,0 +1,153 @@
+<!DOCTYPE html>  <html> <head>   <title>Jakefile.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               Jakefile.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="kd">var</span> <span class="nx">releaseTools</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./lib/main&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">Step</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;step&#39;</span><span class="p">);</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>This Jakefile exposes the following tasks using the <code>releasetools</code> package:</p>
+
+<pre><code>jake release:bump      # Bump version in package.json
+jake release:build     # Build the new package version
+jake release:site      # Create the public site  
+jake release:publish   # Publish to GitHub and NPM
+</code></pre>
+
+<ul>
+<li><p><strong>release:bump</strong> method only increases the version number in the package.json</p></li>
+<li><p><strong>release:build</strong> updates the changelog, the contributors files and creates the
+annotated examples HTML files</p></li>
+<li><p><strong>release:site</strong> updates the package public site, with the new version information</p></li>
+<li><p><strong>release:publish</strong> commits everything to git, creates the git release tag, pushes to
+GitHub and publishes the package to NPM</p></li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Customize example files to document via docco</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nx">releaseTools</span><span class="p">.</span><span class="nx">setOptions</span><span class="p">({</span>
+  <span class="nx">examplePaths</span><span class="o">:</span> <span class="p">[</span>
+    <span class="s1">&#39;Jakefile.js&#39;</span>
+  <span class="p">]</span>
+<span class="p">});</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <h2>Test task</h2>
+
+<p>This task executes the package tests by calling the standard <code>npm test</code> command</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nx">desc</span><span class="p">(</span><span class="s2">&quot;execute tests&quot;</span><span class="p">);</span>
+<span class="nx">task</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">,</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">spawn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;child_process&#39;</span><span class="p">).</span><span class="nx">spawn</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">child</span> <span class="o">=</span> <span class="nx">spawn</span><span class="p">(</span><span class="s1">&#39;npm&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]);</span>
+  
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;executing the tests...&#39;</span><span class="p">);</span>
+  
+  <span class="nx">child</span><span class="p">.</span><span class="nx">stderr</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">stderr</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">process</span><span class="p">.</span><span class="nx">stderr</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">stderr</span><span class="p">);</span>
+  <span class="p">});</span>
+  <span class="nx">child</span><span class="p">.</span><span class="nx">stdout</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">stdout</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">process</span><span class="p">.</span><span class="nx">stdout</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">stdout</span><span class="p">);</span>
+  <span class="p">});</span>
+  <span class="nx">child</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;exit&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">code</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">code</span> <span class="o">!==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">fail</span><span class="p">(</span><span class="nx">code</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Done!&#39;</span><span class="p">);</span>
+      <span class="nx">complete</span><span class="p">();</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+<span class="p">},</span> <span class="kc">true</span><span class="p">);</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Namespace with all the release related tasks</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nx">namespace</span><span class="p">(</span><span class="s1">&#39;release&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <h2>Build task</h2>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">desc</span><span class="p">(</span><span class="s1">&#39;Modify the working copy with all the release information&#39;</span><span class="p">);</span>
+  <span class="nx">task</span><span class="p">(</span><span class="s1">&#39;build&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">releaseType</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">Step</span><span class="p">(</span>
+      </pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <h3>Update Changelog</h3>
+
+<p>It updated the <code>History.md</code> file with all the commit messages since
+last package release (detected by last created tag).</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Updating History.md file...&#39;</span><span class="p">);</span>
+        <span class="nx">releaseTools</span><span class="p">.</span><span class="nx">updateChangelog</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+      <span class="p">},</span>
+      </pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <h3>Update Contributors</h3>
+
+<p>It overwrites the AUTHORS file with all the GIT commiters</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Updating AUTHORS file...&#39;</span><span class="p">);</span>
+        <span class="nx">releaseTools</span><span class="p">.</span><span class="nx">updateAuthorsFile</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+      <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <h3>Create examples</h3>
+
+<p>It converts all the specified example files to
+HTML files with inline annotated comments, using 
+<a href="http://jashkenas.github.com/docco/">Docco</a></p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;creating examples documentation...&#39;</span><span class="p">);</span>
+        <span class="nx">releaseTools</span><span class="p">.</span><span class="nx">createExamples</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+      <span class="p">},</span>
+      <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="nx">fail</span><span class="p">();</span>
+        <span class="k">else</span> <span class="nx">complete</span><span class="p">();</span>
+      <span class="p">}</span>
+    <span class="p">);</span>
+  <span class="p">},</span> <span class="kc">true</span><span class="p">);</span>
+  </pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <h2>Create site task</h2>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">desc</span><span class="p">(</span><span class="s1">&#39;Create the public site&#39;</span><span class="p">);</span>
+  <span class="nx">task</span><span class="p">(</span><span class="s1">&#39;site&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">releaseType</span><span class="p">)</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <h3>Create site</h3>
+
+<p>It creates the <code>docs/</code> folder with the following contents:
+* All the assets in <code>site/javascripts</code> and <code>site/stylesheets</code>
+* The <code>site/index.html</code> skeleton file with the contents of the
+  specified markdown files</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Creating the public site page...&#39;</span><span class="p">);</span>
+    <span class="nx">releaseTools</span><span class="p">.</span><span class="nx">createSite</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="nx">fail</span><span class="p">();</span>
+      <span class="k">else</span> <span class="nx">complete</span><span class="p">();</span>
+    <span class="p">});</span>
+  <span class="p">},</span> <span class="kc">true</span><span class="p">);</span></pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <h2>Publish task</h2>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">desc</span><span class="p">(</span><span class="s1">&#39;Publish to GitHub and NPM the new version&#39;</span><span class="p">);</span>
+  <span class="nx">task</span><span class="p">(</span><span class="s1">&#39;publish&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span> <span class="p">,</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">Step</span><span class="p">(</span>
+      </pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-13">&#182;</a>               </div>               <p>Check if the <code>History.md</code> is modified
+(to ensure that the <code>release:build</code> task has been already executed)</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">releaseTools</span><span class="p">.</span><span class="nx">isWorkingCopyClean</span><span class="p">(</span><span class="s1">&#39;History.md&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+      <span class="p">},</span>
+      </pre></div>             </td>           </tr>                               <tr id="section-14">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-14">&#182;</a>               </div>               <h3>Commit to Git</h3>
+
+<p>Makes the commit and creates the tag</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="k">throw</span><span class="p">(</span><span class="s1">&#39;Error while checking if the git tree is clean: &#39;</span> <span class="o">+</span> <span class="nx">err</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="k">throw</span><span class="p">(</span><span class="s1">&#39;You must run jake release:build before publish&#39;</span><span class="p">);</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Bumping version and creating git tag...&#39;</span><span class="p">);</span>
+        <span class="nx">releaseTools</span><span class="p">.</span><span class="nx">commitToGit</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+      <span class="p">},</span>
+      </pre></div>             </td>           </tr>                               <tr id="section-15">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-15">&#182;</a>               </div>               <h3>Update gh-pages branch</h3>
+
+<p>If the branch does not exist, it creates it with the contents of
+the <code>docs/</code> folder. If it already exists it copies the new contents
+of the <code>docs/</code> folder into the branch</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Merging changes into gh-pages branch...&#39;</span><span class="p">);</span>
+        <span class="nx">releaseTools</span><span class="p">.</span><span class="nx">updatePagesBranch</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+      <span class="p">},</span>
+      </pre></div>             </td>           </tr>                               <tr id="section-16">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-16">&#182;</a>               </div>               <h3>Push to GitHub</h3>
+
+<p>It just does a <code>git push origin</code></p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Pushing changes to GitHub...&#39;</span><span class="p">);</span>
+        <span class="nx">releaseTools</span><span class="p">.</span><span class="nx">pushToGit</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+      <span class="p">},</span>
+      </pre></div>             </td>           </tr>                               <tr id="section-17">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-17">&#182;</a>               </div>               <h3>Publish to NPM</h3>
+
+<p>The same as <code>npm publish</code></p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Publishing NPM package...&#39;</span><span class="p">);</span>
+        <span class="nx">releaseTools</span><span class="p">.</span><span class="nx">npmPublish</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+      <span class="p">},</span>
+      <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="nx">fail</span><span class="p">();</span>
+        <span class="k">else</span> <span class="nx">complete</span><span class="p">();</span>
+      <span class="p">}</span>
+    <span class="p">);</span>  
+  <span class="p">},</span> <span class="kc">true</span><span class="p">);</span>
+  </pre></div>             </td>           </tr>                               <tr id="section-18">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-18">&#182;</a>               </div>               <h2>Update package.json task</h2>
+
+<p>It accepts a parameter which can be patch, minor or major and then 
+upgrades the version in the <code>package.json</code> file based on the 
+<a href="http://semver.org/">Semantic Versioning Spec</a>.
+If no parameter is specified, it uses <code>patch</code>.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">desc</span><span class="p">(</span><span class="s1">&#39;Bump version in package.json&#39;</span><span class="p">);</span>
+  <span class="nx">task</span><span class="p">(</span><span class="s1">&#39;bump&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">releaseType</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">releaseType</span> <span class="o">=</span> <span class="nx">releaseType</span> <span class="o">||</span> <span class="s1">&#39;patch&#39;</span><span class="p">;</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Bumping version in package.json...&#39;</span><span class="p">);</span>
+    <span class="nx">releaseTools</span><span class="p">.</span><span class="nx">updateVersionInPackageJson</span><span class="p">(</span><span class="nx">releaseType</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">oldVersion</span><span class="p">,</span> <span class="nx">newVersion</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">fail</span><span class="p">(</span><span class="s1">&#39;Error while updating version in package.json: &#39;</span> <span class="o">+</span> <span class="nx">err</span><span class="p">);</span>
+      <span class="p">}</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">oldVersion</span> <span class="o">+</span> <span class="s1">&#39; --&gt; &#39;</span> <span class="o">+</span> <span class="nx">newVersion</span><span class="p">);</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Done!&#39;</span><span class="p">);</span>
+      <span class="nx">complete</span><span class="p">();</span>
+    <span class="p">});</span>
+  <span class="p">},</span> <span class="kc">true</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="nx">desc</span><span class="p">(</span><span class="s1">&#39;Default task is test&#39;</span><span class="p">);</span>
+<span class="nx">task</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">],</span> <span class="kd">function</span><span class="p">(){},</span> <span class="kc">true</span><span class="p">);</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
