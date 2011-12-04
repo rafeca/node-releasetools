@@ -3,7 +3,9 @@ var Step = require('step');
 
 // Customize example files to document via docco
 releaseTools.setOptions({
-  examplePaths: 'Jakefile.js'
+  examplePaths: [
+    'Jakefile.js'
+  ]
 });
 
 // ## Tests task
