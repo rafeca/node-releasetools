@@ -65,24 +65,26 @@ namespace('release', function() {
         console.log('creating examples documentation...');
         releaseTools.createExamples(this);
       },
-      function(err){
-        if (err) throw err;
-      
-        // ### Create site
-        // It creates the `docs/` folder with the following contents:
-        // * All the assets in `site/javascripts` and `site/stylesheets`
-        // * The `site/index.html` skeleton file with the contents of the
-        //   specified markdown files
-        console.log('Creating the public site page');
-        releaseTools.createSite(this);
-      },
-      function(err){
+      function(err) {
         if (err) fail();
         else complete();
       }
     );
   }, true);
-
+  
+  desc('Create the public site');
+  task('site', ['test'], function(releaseType) {
+    // ### Create site
+    // It creates the `docs/` folder with the following contents:
+    // * All the assets in `site/javascripts` and `site/stylesheets`
+    // * The `site/index.html` skeleton file with the contents of the
+    //   specified markdown files
+    console.log('Creating the public site page');
+    releaseTools.createSite(function(err){
+      if (err) fail();
+      else complete();
+    });
+  }, true);
 
   desc('Publish to GitHub and NPM the new version');
   task('publish', ['test'] ,function() {
