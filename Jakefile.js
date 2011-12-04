@@ -1,9 +1,9 @@
 var releaseTools = require('./lib/main');
 var Step = require('step');
 
-// Customize example file we want to document
+// Customize example files to document via docco
 releaseTools.setOptions({
-  examplePaths: 'Jakefile'
+  examplePaths: 'Jakefile.js'
 });
 
 // ## Tests task
