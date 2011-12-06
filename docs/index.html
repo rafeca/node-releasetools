@@ -45,7 +45,6 @@ Jakefile file.</p>
 releaseTools.setOptions({
   changelogFile: 'History.md',
   authorsFile: 'AUTHORS',
-  baseBranch: 'master',
   siteIndexPath: 'site/index.html',
   siteAssetsPaths: [
     'site/javascripts',
@@ -68,7 +67,14 @@ $ npm test
 
       <h2>Change Log</h2>
       
-      <h3>0.0.2-2 — <em>December 4, 2011</em></h3>
+      <h3>0.1.0 — <em>December 6, 2011</em></h3>
+
+<ul>
+<li>Feature: Added support for working simultaneously on multiple versions</li>
+<li>Feature: Get the base branch from GIT instead of config file</li>
+</ul>
+
+<h3>0.0.2-2 — <em>December 4, 2011</em></h3>
 
 <ul>
 <li>Fix: The changes are now prepended before the old changelog</li>
@@ -81,6 +87,7 @@ $ npm test
 <ul>
 <li>Initial version :)</li>
 </ul>
+
             
       <h2>Contributors</h2>
       
@@ -111,7 +118,7 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
 CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
-
+      
       <div id="footer">
         <p>Author: Rafael de Oleza<br/>
           <a href="https://github.com/rafeca">@github</a> &mdash; 

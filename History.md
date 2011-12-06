@@ -1,3 +1,8 @@
+### 0.1.0 — *December 6, 2011*
+
+  * Feature: Added support for working simultaneously on multiple versions
+  * Feature: Get the base branch from GIT instead of config file
+
 ### 0.0.2-2 — *December 4, 2011*
 
   * Fix: The changes are now prepended before the old changelog
