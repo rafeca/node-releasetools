@@ -122,7 +122,7 @@ of the <code>docs/</code> folder into the branch</p>             </td>          
         <span class="nx">releaseTools</span><span class="p">.</span><span class="nx">npmPublish</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
       <span class="p">},</span>
       <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="nx">fail</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="nx">fail</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
         <span class="k">else</span> <span class="nx">complete</span><span class="p">();</span>
       <span class="p">}</span>
     <span class="p">);</span>  

@@ -1,3 +1,8 @@
+### 0.1.1 — *December 6, 2011*
+
+  * Fix: Now the commitToGit method also commits the package.json file
+  * Fix: Bug introduced in 0.1.0 that prevented to push the version to GitHub
+
 ### 0.1.0 — *December 6, 2011*
 
   * Feature: Added support for working simultaneously on multiple versions
