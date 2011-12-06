@@ -24,7 +24,6 @@ Additionally, it's possible to customize its behaviour by changing some paramete
     releaseTools.setOptions({
       changelogFile: 'History.md',
       authorsFile: 'AUTHORS',
-      baseBranch: 'master',
       siteIndexPath: 'site/index.html',
       siteAssetsPaths: [
         'site/javascripts',
