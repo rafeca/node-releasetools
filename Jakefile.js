@@ -152,7 +152,7 @@ namespace('release', function() {
         releaseTools.npmPublish(this);
       },
       function(err){
-        if (err) fail();
+        if (err) fail(err);
         else complete();
       }
     );  
