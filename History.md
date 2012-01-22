@@ -1,3 +1,7 @@
+### 0.1.2 — *January 22, 2012*
+
+  * Fix bug with getCurrentPath()
+
 ### 0.1.1 — *December 6, 2011*
 
   * Fix: Now the commitToGit method also commits the package.json file
