@@ -1,3 +1,7 @@
+### 0.1.4 — *January 22, 2012*
+
+  * Fix: Bug when printing the current version in History.md
+
 ### 0.1.3 — *January 22, 2012*
 
   * Fix: Bug introduced in last revision that made Docco command fail
