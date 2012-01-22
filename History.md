@@ -1,3 +1,7 @@
+### 0.1.3 — *January 22, 2012*
+
+  * Fix: Bug introduced in last revision that made Docco command fail
+
 ### 0.1.2 — *January 22, 2012*
 
   * Fix bug with getCurrentPath()
