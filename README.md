@@ -5,9 +5,10 @@ Node Release Tools is a simple NPM package which makes it really easy automate r
 ## Installation
 
 Just install it via NPM:
-    
-    
-    $ npm install releasetools
+
+```bash
+$ npm install releasetools
+```
     
 
 ## Usage
@@ -18,29 +19,29 @@ Jakefile file.
 
 Additionally, it's possible to customize its behaviour by changing some parameters:
 
+```js
+var releaseTools = require('releasetools');
 
-    var releaseTools = require('releasetools');
-
-    releaseTools.setOptions({
-      changelogFile: 'History.md',
-      authorsFile: 'AUTHORS',
-      siteIndexPath: 'site/index.html',
-      siteAssetsPaths: [
-        'site/javascripts',
-        'site/stylesheets'
-      ],
-      examplePaths: [
-        'examples/*'
-      ]
-    });
-    
-
+releaseTools.setOptions({
+  changelogFile: 'History.md',
+  authorsFile: 'AUTHORS',
+  siteIndexPath: 'site/index.html',
+  siteAssetsPaths: [
+    'site/javascripts',
+    'site/stylesheets'
+  ],
+  examplePaths: [
+    'examples/*'
+  ]
+});
+```
 
 ## Tests
 
 You just have to checkout this package from GitHub, install development dependencies and execute the tests:
 
-    
-    $ git clone "https://github.com/rafeca/node-releasetools.git"
-    $ npm install --dev
-    $ npm test
+```bash
+$ git clone "https://github.com/rafeca/node-releasetools.git"
+$ npm install --dev
+$ npm test
+```

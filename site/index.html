@@ -9,9 +9,6 @@
     <link rel="stylesheet" media="all" href="stylesheets/syntax.css" />
     
     <script type="text/javascript" src="javascripts/highlight.pack.js"></script>
-    <script type="text/javascript">
-        hljs.initHighlightingOnLoad();
-    </script>
   </head>
   
   <body>
@@ -42,6 +39,21 @@
           <a href="http://rafeca.com">Blog</a>  
         </p>
       </div>
+      <script type="text/javascript">
+        var codes = document.getElementsByTagName('code');
+        for (var i=0;i<codes.length;i++) {
+          if (codes[i].className.indexOf('lang-') === 0) {
+            codes[i].className = codes[i].className.slice('lang-'.length);
+          }
+
+          switch(codes[i].className) {
+            case 'js':
+              codes[i].className = 'javascript';
+              break;
+          }
+        }
+        hljs.initHighlightingOnLoad();
+    </script>
     </div>
   </body>
 </html>
