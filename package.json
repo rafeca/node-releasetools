@@ -19,12 +19,12 @@
     "step": "0.0.5"
   },
   "devDependencies": {
-    "jake": "0.3.3",
-    "mocha": "1.2.0",
+    "jake": "0.3.7",
+    "mocha": "1.2.2",
     "should": "0.6.3"
   },
   "engines": {
-    "node": ">= 0.6.0 <= 0.7.12"
+    "node": ">= 0.6.0 < 0.9.0"
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha --reporter list"
