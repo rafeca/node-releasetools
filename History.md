@@ -1,3 +1,7 @@
+### 0.3.0 — *June 29, 2012*
+
+  * Updated dependencies to support Node.js 0.8
+
 ### 0.2.0 — *June 24, 2012*
 
   * Add support for Node.js up to version 0.7.12
