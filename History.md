@@ -1,3 +1,7 @@
+### 0.4.0 — *September 17, 2012*
+
+  * Change authors output to be easier to read in MD
+
 ### 0.3.0 — *June 29, 2012*
 
   * Updated dependencies to support Node.js 0.8
