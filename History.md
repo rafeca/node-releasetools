@@ -1,3 +1,7 @@
+### 0.4.1 — *March 12, 2013*
+
+  * Make the package compatible with Node.js 0.10.x
+
 ### 0.4.0 — *September 17, 2012*
 
   * Change authors output to be easier to read in MD
